@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAX TRADE CONSULTING SRL</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+theme: {
+extend: {
+fontFamily: {
+sans: ['Inter', 'sans-serif'],
+},
+colors: {
+brand: {
+dark: '#3b2415',
+light: '#5a3822',
+accent: '#d89f5c',
+accentHover: '#c48b48',
+grayBg: '#f9f9f9',
+textMain: '#333333',
+textMuted: '#666666'
+}
+}
+}
+}
+}
+</script>
+<style>
+html {
+scroll-behavior: smooth;
+}
+body {
+font-family: 'Inter', sans-serif;
+color: #333333;
+background-color: #ffffff;
+overflow-x: hidden;
+}
+.modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: rgba(0, 0, 0, 0.6);
+backdrop-filter: blur(4px);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 100;
+opacity: 0;
+visibility: hidden;
+transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.modal-overlay.active {
+opacity: 1;
+visibility: visible;
+}
+.modal-content {
+background-color: #ffffff;
+border-radius: 8px;
+width: 100%;
+max-width: 500px;
+transform: translateY(20px);
+transition: transform 0.3s ease;
+box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.modal-overlay.active .modal-content {
+transform: translateY(0);
+}
+.input-field {
+width: 100%;
+padding: 0.75rem 1rem;
+border: 1px solid #e5e7eb;
+border-radius: 4px;
+outline: none;
+transition: border-color 0.2s ease;
+background-color: #f9fafb;
+}
+.input-field:focus {
+border-color: #d89f5c;
+background-color: #ffffff;
+}
+.btn-primary {
+background-color: #3b2415;
+color: #ffffff;
+padding: 0.75rem 1.5rem;
+border-radius: 4px;
+font-weight: 500;
+transition: background-color 0.2s ease;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: none;
+}
+.btn-primary:hover {
+background-color: #5a3822;
+}
+.btn-accent {
+background-color: #d89f5c;
+color: #ffffff;
+padding: 0.75rem 1.5rem;
+border-radius: 4px;
+font-weight: 500;
+transition: background-color 0.2s ease;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+border: none;
+}
+.btn-accent:hover {
+background-color: #c48b48;
+}
+.bg-hero {
+background-image: url('main1.jpg');
+background-size: cover;
+background-position: center;
+background-attachment: fixed;
+}
+.process-connector {
+position: absolute;
+top: 2rem;
+left: 50%;
+width: 100%;
+height: 2px;
+background-color: #e5e7eb;
+z-index: -1;
+}
+@media (max-width: 768px) {
+.process-connector {
+display: none;
+}
+}
+.nav-link {
+position: relative;
+color: #333333;
+font-weight: 500;
+text-decoration: none;
+transition: color 0.2s ease;
+}
+.nav-link:hover {
+color: #d89f5c;
+}
+.nav-link::after {
+content: '';
+position: absolute;
+width: 0;
+height: 2px;
+bottom: -4px;
+left: 0;
+background-color: #d89f5c;
+transition: width 0.3s ease;
+}
+.nav-link:hover::after {
+width: 100%;
+}
+</style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+
+<div class="bg-brand-dark text-white py-2 px-6 text-sm flex justify-between items-center">
+<div class="hidden md:block">
+<span>Platformă B2B exclusivă pentru optimizarea lanțului de aprovizionare</span>
+</div>
+<div class="flex items-center space-x-6 w-full md:w-auto justify-center md:justify-end">
+<span class="flex items-center">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-brand-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+</svg>
+main@maxtradeconsulting.info
+</span>
+</div>
+</div>
+
+<header class="bg-white shadow-sm sticky top-0 z-40">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-20">
+<div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
+<div class="w-10 h-10 rounded-full bg-brand-accent flex items-center justify-center mr-3 text-white font-bold text-xl">
+M
+</div>
+<span class="font-bold text-2xl tracking-tight text-brand-dark">MAX TRADE.</span>
+</div>
+<nav class="hidden md:flex space-x-8">
+<a href="#acasa" class="nav-link">Acasă</a>
+<a href="#despre-noi" class="nav-link">Despre Noi</a>
+<a href="#servicii" class="nav-link">Servicii</a>
+<a href="#avantaje" class="nav-link">Avantaje</a>
+<a href="#proces" class="nav-link">Proces</a>
+</nav>
+<div class="hidden md:flex items-center space-x-4">
+<button onclick="openModal('contactModal')" class="btn-primary">
+Solicitare Audit
+</button>
+</div>
+<div class="md:hidden flex items-center">
+<button id="mobileMenuBtn" class="text-brand-dark hover:text-brand-accent focus:outline-none">
+<svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+</svg>
+</button>
+</div>
+</div>
+</div>
+<div id="mobileMenu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 shadow-lg">
+<div class="px-4 pt-2 pb-6 space-y-1">
+<a href="#acasa" class="block px-3 py-3 text-base font-medium text-brand-dark hover:bg-brand-grayBg hover:text-brand-accent rounded-md">Acasă</a>
+<a href="#despre-noi" class="block px-3 py-3 text-base font-medium text-brand-dark hover:bg-brand-grayBg hover:text-brand-accent rounded-md">Despre Noi</a>
+<a href="#servicii" class="block px-3 py-3 text-base font-medium text-brand-dark hover:bg-brand-grayBg hover:text-brand-accent rounded-md">Servicii</a>
+<a href="#avantaje" class="block px-3 py-3 text-base font-medium text-brand-dark hover:bg-brand-grayBg hover:text-brand-accent rounded-md">Avantaje</a>
+<a href="#proces" class="block px-3 py-3 text-base font-medium text-brand-dark hover:bg-brand-grayBg hover:text-brand-accent rounded-md">Proces</a>
+<button onclick="openModal('contactModal'); document.getElementById('mobileMenu').classList.add('hidden');" class="mt-4 w-full text-left block px-3 py-3 text-base font-medium bg-brand-dark text-white rounded-md">Solicitare Audit</button>
+</div>
+</div>
+</header>
+
+<main class="flex-grow">
+<section id="acasa" class="relative bg-hero h-[600px] flex items-center">
+<div class="absolute inset-0 bg-black bg-opacity-60"></div>
+<div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-center">
+<span class="text-brand-accent font-semibold tracking-wider uppercase text-sm mb-4 block">Max Trade Consulting SRL</span>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto">
+Optimizarea Comerțului cu Ridicata pentru Bunuri de Consum
+</h1>
+<p class="mt-4 text-lg md:text-xl text-gray-200 max-w-3xl mx-auto font-light leading-relaxed">
+Furnizăm soluții strategice de distribuție și aprovizionare pentru bunuri nedurabile, integrând analize de piață și eficiență logistică la cel mai înalt nivel operațional.
+</p>
+<div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+<button onclick="openModal('contactModal')" class="btn-accent text-lg px-8 py-4">
+Inițiază Colaborarea
+</button>
+<a href="#servicii" class="btn-primary bg-white text-brand-dark hover:bg-gray-100 text-lg px-8 py-4">
+Explorează Soluțiile
+</a>
+</div>
+</div>
+</section>
+
+<section id="despre-noi" class="py-20 bg-white">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div>
+<div class="inline-block border-l-4 border-brand-accent pl-4 mb-6">
+<h2 class="text-3xl font-bold text-brand-dark tracking-tight">Arhitectura Distribuției Moderne</h2>
+</div>
+<p class="text-brand-textMuted text-lg leading-relaxed mb-6 text-justify">
+MAX TRADE CONSULTING SRL reprezintă un pilon central în infrastructura comerțului cu ridicata din România. Ne specializăm exclusiv în distribuția și managementul avansat al fluxurilor de bunuri nedurabile, deservind o rețea vastă de parteneri B2B. Abordarea noastră analitică transcende simpla tranzacție comercială, concentrându-ne riguros pe optimizarea întregului lanț de aprovizionare.
+</p>
+<p class="text-brand-textMuted text-lg leading-relaxed text-justify">
+Integrăm sisteme moderne de analiză a cererii pentru a asigura o rotație rapidă și extrem de eficientă a stocurilor. Misiunea noastră fundamentală este de a asigura continuitatea, securitatea și calitatea fluxului de mărfuri către piețele de desfacere. Operăm cu o disciplină absolută, respectând cele mai înalte standarde de conformitate corporativă și eficiență operațională pe plan european.
+</p>
+</div>
+<div class="relative">
+<div class="absolute inset-0 bg-brand-accent rounded-lg transform translate-x-4 translate-y-4 opacity-20"></div>
+<div class="relative bg-brand-grayBg rounded-lg p-10 border border-gray-100 shadow-sm h-full flex flex-col justify-center">
+<div class="grid grid-cols-2 gap-8">
+<div class="text-center">
+<div class="text-4xl font-bold text-brand-dark mb-2">99%</div>
+<div class="text-sm text-brand-textMuted uppercase tracking-wide font-medium">Eficiență Logistică</div>
+</div>
+<div class="text-center">
+<div class="text-4xl font-bold text-brand-dark mb-2">24/7</div>
+<div class="text-sm text-brand-textMuted uppercase tracking-wide font-medium">Monitorizare Flux</div>
+</div>
+<div class="text-center">
+<div class="text-4xl font-bold text-brand-dark mb-2">B2B</div>
+<div class="text-sm text-brand-textMuted uppercase tracking-wide font-medium">Focalizare Exclusivă</div>
+</div>
+<div class="text-center">
+<div class="text-4xl font-bold text-brand-dark mb-2">SLA</div>
+<div class="text-sm text-brand-textMuted uppercase tracking-wide font-medium">Garantat Contractual</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="servicii" class="py-20 bg-brand-grayBg">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="text-center max-w-3xl mx-auto mb-16">
+<span class="text-brand-accent font-semibold tracking-wider uppercase text-sm block mb-2">Expertiză Operațională</span>
+<h2 class="text-3xl font-bold text-brand-dark tracking-tight">Soluții Integrate de Aprovizionare</h2>
+<div class="w-20 h-1 bg-brand-accent mx-auto mt-6"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white p-10 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+<div class="w-14 h-14 bg-brand-dark rounded-lg flex items-center justify-center mb-6 text-brand-accent">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+</svg>
+</div>
+<h3 class="text-xl font-bold text-brand-dark mb-4">Aprovizionare Strategică B2B</h3>
+<p class="text-brand-textMuted leading-relaxed">
+Identificăm și securizăm surse de top pentru bunuri de consum nedurabile la nivel global. Analizăm constant piețele internaționale pentru a garanta cel mai bun raport între calitate și preț de achiziție. Reducem proactiv riscurile asociate cu fluctuațiile de stoc prin protocoale de planificare predictivă.
+</p>
+</div>
+<div class="bg-white p-10 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+<div class="w-14 h-14 bg-brand-dark rounded-lg flex items-center justify-center mb-6 text-brand-accent">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+</svg>
+</div>
+<h3 class="text-xl font-bold text-brand-dark mb-4">Managementul Distribuției</h3>
+<p class="text-brand-textMuted leading-relaxed">
+Proiectăm arhitecturi logistice hiper-eficiente pentru a minimiza timpii de tranzit inter-nodali. Implementăm protocoale stricte de monitorizare a parametrilor de calitate pe parcursul întregului transport. Asigurăm o trasabilitate completă și transparentă a loturilor de la producător până la beneficiarul final.
+</p>
+</div>
+<div class="bg-white p-10 rounded-lg shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-300">
+<div class="w-14 h-14 bg-brand-dark rounded-lg flex items-center justify-center mb-6 text-brand-accent">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+</svg>
+</div>
+<h3 class="text-xl font-bold text-brand-dark mb-4">Optimizarea Stocurilor</h3>
+<p class="text-brand-textMuted leading-relaxed">
+Utilizăm modele analitice avansate pentru a preveni supra-stocarea și degradarea inerentă a mărfurilor. Oferim strategii de rotație a inventarului strict adaptate specificului bunurilor cu ciclu scurt de viață. Maximizăm lichiditatea financiară a partenerilor noștri prin implementarea strategiilor de achiziție just-in-time.
+</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="avantaje" class="py-20 bg-white border-t border-gray-100">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16">
+<div class="max-w-2xl">
+<span class="text-brand-accent font-semibold tracking-wider uppercase text-sm block mb-2">Diferențiatori Competitivi</span>
+<h2 class="text-3xl font-bold text-brand-dark tracking-tight">Standarde Superioare de Execuție</h2>
+</div>
+<div class="mt-6 md:mt-0 hidden md:block">
+<div class="w-24 h-1 bg-brand-dark"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<div class="flex flex-col">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full bg-brand-grayBg border border-brand-accent flex items-center justify-center mr-4">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+</svg>
+</div>
+<h3 class="text-lg font-bold text-brand-dark">Infrastructură de Date Avansată</h3>
+</div>
+<p class="text-brand-textMuted leading-relaxed pl-16 border-l border-gray-100">
+Deciziile noastre strategice se bazează exclusiv pe analize cantitative riguroase și monitorizarea telemetrică în timp real a tendințelor de consum și fluctuațiilor din piețele de aprovizionare.
+</p>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full bg-brand-grayBg border border-brand-accent flex items-center justify-center mr-4">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+</svg>
+</div>
+<h3 class="text-lg font-bold text-brand-dark">Conformitate și Securitate</h3>
+</div>
+<p class="text-brand-textMuted leading-relaxed pl-16 border-l border-gray-100">
+Operăm strict în limitele cadrelor de reglementare europene aplicabile, garantând integritatea juridică și faptică a fiecărei tranzacții și protejând interesele tuturor părților implicate.
+</p>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center mb-6">
+<div class="w-12 h-12 rounded-full bg-brand-grayBg border border-brand-accent flex items-center justify-center mr-4">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-brand-dark" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+</svg>
+</div>
+<h3 class="text-lg font-bold text-brand-dark">Scalabilitate Operațională</h3>
+</div>
+<p class="text-brand-textMuted leading-relaxed pl-16 border-l border-gray-100">
+Capacitatea noastră de procesare logistică se adaptează dinamic și instantaneu la volumele de tranzacționare ale partenerilor, indiferent de complexitatea sau dimensiunea comenzilor.
+</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="proces" class="py-24 bg-brand-dark text-white relative z-10 overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-brand-light rounded-full opacity-20 transform translate-x-1/2 -translate-y-1/2"></div>
+<div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-accent rounded-full opacity-10 transform -translate-x-1/3 translate-y-1/3"></div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+<div class="text-center max-w-3xl mx-auto mb-20">
+<h2 class="text-3xl font-bold tracking-tight mb-4">Metodologia de Implementare</h2>
+<p class="text-gray-300">Un proces structurat în trei etape fundamentale, proiectat pentru integrare rapidă și minimizarea disfuncționalităților în lanțul dumneavoastră de aprovizionare.</p>
+</div>
+
+<div class="relative">
+<div class="hidden md:block absolute top-12 left-[10%] right-[10%] h-0.5 bg-brand-light"></div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center relative z-10">
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 bg-brand-dark border-4 border-brand-accent rounded-full flex items-center justify-center mb-6 shadow-lg z-10">
+<span class="text-3xl font-bold text-brand-accent">01</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Analiza Cerințelor și Audit</h3>
+<p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+Evaluăm riguros necesitățile specifice de aprovizionare ale entității dumneavoastră și mapăm cantitativ fluxurile curente de materiale pentru a identifica ineficiențele.
+</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 bg-brand-dark border-4 border-brand-accent rounded-full flex items-center justify-center mb-6 shadow-lg z-10">
+<span class="text-3xl font-bold text-brand-accent">02</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Sinteza Soluției și Contractare</h3>
+<p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+Dezvoltăm un model matematic de distribuție personalizat și stabilim parametri stricți de performanță (SLA) integrați în documentația contractuală fermă.
+</p>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-24 h-24 bg-brand-dark border-4 border-brand-accent rounded-full flex items-center justify-center mb-6 shadow-lg z-10">
+<span class="text-3xl font-bold text-brand-accent">03</span>
+</div>
+<h3 class="text-xl font-bold mb-3">Implementare și Monitorizare</h3>
+<p class="text-gray-400 text-sm leading-relaxed max-w-xs">
+Executăm planul de distribuție conform specificațiilor, aplicând evaluări periodice și ajustări algoritmice pentru optimizarea continuă a fluxului.
+</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section id="contact-trigger" class="py-20 bg-brand-accent">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+<h2 class="text-3xl font-bold text-white mb-6">Optimizați-vă lanțul de aprovizionare astăzi.</h2>
+<p class="text-brand-dark text-lg mb-10 max-w-2xl mx-auto font-medium">
+Inițiați o evaluare tehnică a infrastructurii dumneavoastră logistice. Solicitați o consultație de specialitate din partea experților noștri în distribuție B2B.
+</p>
+<button onclick="openModal('contactModal')" class="bg-brand-dark text-white hover:bg-white hover:text-brand-dark transition-colors duration-300 font-bold py-4 px-10 rounded shadow-lg text-lg border-2 border-transparent hover:border-brand-dark">
+Deschide Formularul de Solicitare
+</button>
+</div>
+</section>
+
+<footer class="bg-brand-dark pt-16 pb-8 border-t-4 border-brand-accent">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 lg:col-span-2">
+<div class="flex items-center mb-6">
+<div class="w-8 h-8 rounded bg-brand-accent flex items-center justify-center mr-3 text-white font-bold">
+M
+</div>
+<span class="font-bold text-xl tracking-tight text-white">MAX TRADE.</span>
+</div>
+<p class="text-gray-400 text-sm leading-relaxed max-w-md">
+Furnizor de soluții avansate pentru comerțul cu ridicata al bunurilor nedurabile. Integrăm tehnologia informației și analitica de date pentru a redefini standardele de eficiență în distribuția B2B modernă.
+</p>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Informații Corporative</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a href="#acasa" class="hover:text-brand-accent transition-colors">Prezentare Generală</a></li>
+<li><a href="#despre-noi" class="hover:text-brand-accent transition-colors">Despre Entitate</a></li>
+<li><a href="#servicii" class="hover:text-brand-accent transition-colors">Portofoliu Servicii</a></li>
+<li><a href="#avantaje" class="hover:text-brand-accent transition-colors">Conformitate & Politici</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-bold mb-6 uppercase text-sm tracking-wider">Date de Contact</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li class="flex items-start">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-brand-accent flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+</svg>
+<span>
+STR. LT. ALEXANDRU POPESCU NR.9B<br>
+SECTORUL 3 Bucuresti<br>
+010011 Romania
+</span>
+</li>
+<li class="flex items-center mt-4">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-brand-accent flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+</svg>
+<span>main@maxtradeconsulting.info</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-brand-light pt-8 flex flex-col md:flex-row justify-between items-center">
+<p class="text-gray-500 text-xs text-center md:text-left">
+&copy; 2026 MAX TRADE CONSULTING SRL. Toate drepturile rezervate. Platformă B2B exclusivă.
+</p>
+<div class="flex space-x-4 mt-4 md:mt-0 text-gray-500 text-xs">
+<span>Română</span>
+<span class="mx-2">|</span>
+<span>Regiunea: EU</span>
+</div>
+</div>
+</div>
+</footer>
+
+<div id="contactModal" class="modal-overlay" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div class="modal-content relative flex flex-col max-h-[90vh]">
+<div class="px-8 py-6 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10 rounded-t-lg">
+<h3 class="text-xl font-bold text-brand-dark" id="modal-title">Formular de Solicitare Audit</h3>
+<button type="button" onclick="closeModal('contactModal')" class="text-gray-400 hover:text-brand-dark focus:outline-none transition-colors">
+<span class="sr-only">Închide</span>
+<svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+</svg>
+</button>
+</div>
+<div class="px-8 py-6 overflow-y-auto">
+<form id="auditForm" onsubmit="submitForm(event)">
+<div class="space-y-5">
+<div>
+<label for="companyName" class="block text-sm font-medium text-gray-700 mb-1">Entitate Juridică / Companie</label>
+<input type="text" id="companyName" name="companyName" required class="input-field" placeholder="Denumirea completă a companiei">
+</div>
+<div>
+<label for="contactName" class="block text-sm font-medium text-gray-700 mb-1">Nume Reprezentant</label>
+<input type="text" id="contactName" name="contactName" required class="input-field" placeholder="Nume și Prenume">
+</div>
+<div>
+<label for="email" class="block text-sm font-medium text-gray-700 mb-1">Adresă de Email Corporativă</label>
+<input type="email" id="email" name="email" required class="input-field" placeholder="nume@companie.ro">
+</div>
+<div>
+<label for="subject" class="block text-sm font-medium text-gray-700 mb-1">Tip Solicitare</label>
+<select id="subject" name="subject" class="input-field">
+<option value="audit">Audit Lanț de Aprovizionare</option>
+<option value="distributie">Cerere Servicii Distribuție</option>
+<option value="consultanta">Consultanță Optimizare Stocuri</option>
+<option value="altele">Alt tip de solicitare</option>
+</select>
+</div>
+<div>
+<label for="message" class="block text-sm font-medium text-gray-700 mb-1">Detalii Tehnice / Specificații</label>
+<textarea id="message" name="message" rows="4" required class="input-field resize-none" placeholder="Vă rugăm să furnizați un context sumar privind necesitățile operaționale..."></textarea>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-gray-100 flex justify-end space-x-4">
+<button type="button" onclick="closeModal('contactModal')" class="btn-primary bg-white text-gray-700 border border-gray-300 hover:bg-gray-50">
+Anulează
+</button>
+<button type="submit" class="btn-primary w-full sm:w-auto">
+Transmite Solicitarea
+</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+
+<div id="successModal" class="modal-overlay" aria-labelledby="success-modal-title" role="dialog" aria-modal="true">
+<div class="modal-content relative p-10 text-center max-w-sm mx-auto">
+<div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+<svg class="h-8 w-8 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+</svg>
+</div>
+<h3 class="text-2xl font-bold text-brand-dark mb-2" id="success-modal-title">Transmisie Confirmată</h3>
+<p class="text-sm text-gray-500 mb-8">
+Solicitarea dumneavoastră a fost înregistrată în sistem. Un analist vă va contacta pe adresa de email furnizată în cel mai scurt timp pentru detalii procedurale.
+</p>
+<button type="button" onclick="closeModal('successModal')" class="btn-primary w-full">
+Confirmă și Închide
+</button>
+</div>
+</div>
+
+<script>
+document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+const menu = document.getElementById('mobileMenu');
+menu.classList.toggle('hidden');
+});
+
+function openModal(modalId) {
+const modal = document.getElementById(modalId);
+modal.classList.add('active');
+document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+const modal = document.getElementById(modalId);
+modal.classList.remove('active');
+document.body.style.overflow = '';
+}
+
+function submitForm(event) {
+event.preventDefault();
+closeModal('contactModal');
+document.getElementById('auditForm').reset();
+setTimeout(() => {
+openModal('successModal');
+}, 300);
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+overlay.addEventListener('click', function(e) {
+if (e.target === this) {
+closeModal(this.id);
+}
+});
+});
+
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape') {
+document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+closeModal(modal.id);
+});
+}
+});
+</script>
+
+</body>
+</html>
